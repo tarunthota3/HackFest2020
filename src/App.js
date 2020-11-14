@@ -18,27 +18,35 @@ function App() {
     };
   };
   const handleClick = () =>{
-    console.log("handleClicked", json.Brands[0]);
+    // console.log("handleClicked", json.Brands[0]);
+    console.log("output: ", convert(json));
+    console.log("res: ", res);
+    // setRes(convert(json));
+  }
+
+  const convert = () =>{
     let brands = json.Brands[0];
     let out = res.Year[0];
     for (const [key, value] of Object.entries(brands)) {
-      console.log(key, ": ", value[0].Year[0]);
+      // console.log(key, ": ", value[0].Year[0]);
       let years = value[0].Year[0];
       for (const [year, data] of Object.entries(years)) {
-        console.log(year, ": ", data);
-        if(out.includes(year)){
+        // console.log(year, ": ", data);
+        if(out.hasOwnProperty(year)){
           console.log("if: ", key);
           out[year].push({[key]:data});
         }
         else{
-          console.log("else: ", key);
+          // console.log("else: ", key);
           out[year] = [];
           out[year].push({[key]:data});
         }
       }
     }
-    console.log("output: ", out);
+    return out;
   }
+
+  console.log("res: ", res);
   return (
     <div className="App">
       <header className="App-header">

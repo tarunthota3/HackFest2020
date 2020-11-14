@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import ReactJson from 'react-json-view'
+// import JSONTree from 'react-json-tree'
+import './convert.css'
 
 class convert extends Component {
 
@@ -50,6 +53,7 @@ class convert extends Component {
     
     render() {
         console.log("this.state: ", this.state);
+        const {json, res} = this.state;
         return (
             <div className="App">
                 <header className="App-header">
@@ -57,6 +61,15 @@ class convert extends Component {
                     <input type="file" id="myfile" name="myfile" onChange={this.handleChange}/>
                     <button type = "button" onClick={this.handleClick}>Convert</button>
                 </header>
+                <div className="container">
+                    <div className="item">
+                        <ReactJson src={json} theme="monokai" />
+                    </div>
+                    <div className="item">
+                        <ReactJson src={res} theme="monokai" collapsed={true} />
+                    </div>
+                </div>
+                {/* <JSONTree data={res} /> */}
             </div>
         );
     }

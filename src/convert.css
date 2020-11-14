@@ -1,0 +1,8 @@
+.container {
+    display: flex; /* or inline-flex */
+    justify-content: space-around;
+    flex-flow: row wrap;
+  }
+  .item {
+    flex-grow: 1; /* default 0 */
+  }

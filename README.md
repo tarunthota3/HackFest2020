@@ -8,6 +8,22 @@ Please run the following commands to run the application as electron app
 ### `npm install -g wait-on`
 ### `npm install -g electron`
 
+### How to start running
+Run these commands
+
+To install the required dependencies
+
+	$ npm install
+
+To run the app in browser
+
+	$ npm start
+  
+To run the app as a Web App
+
+	$ npm run electron-app
+
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -20,7 +36,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm run electrona-app`
+### `npm run electron-app`
 Runs the app in development mode and then runs the electron app.
 
 Upon running this command, a desktop app will be launched which serves the application.

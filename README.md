@@ -8,7 +8,8 @@ Please run the following commands to run the application as electron app
 ### `npm install -g wait-on`
 ### `npm install -g electron`
 
-### How to start running
+## How to start running
+
 Run these commands
 
 To install the required dependencies
@@ -22,7 +23,6 @@ To run the app in browser
 To run the app as a Web App
 
 	$ npm run electron-app
-
 
 ## Available Scripts
 

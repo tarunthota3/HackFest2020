@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import ReactJson from 'react-json-view'
-// import JSONTree from 'react-json-tree'
 import './convert.css'
+import 'semantic-ui-css/semantic.min.css'
+import writeJsonFile from 'write-json-file';
+import { Button, Header, Input, Message } from 'semantic-ui-react'
+
 
 class convert extends Component {
 
@@ -10,66 +13,105 @@ class convert extends Component {
         super(props);
         var initialOutput = {
             "Year": [{
-        
+
             }]
-          }
+        }
         this.state = {
-            json: {},
-            res :initialOutput
+            json: null,
+            res: initialOutput,
+            resCollapse: true,
+            error:false
         }
     }
 
     handleChange = e => {
-        const fileReader = new FileReader();
-        fileReader.readAsText(e.target.files[0], "UTF-8");
-        fileReader.onload = e => {
-            this.setState({json: JSON.parse(e.target.result)});
-        };
+        if ((e.target.files.length) !== 0) {
+            const fileReader = new FileReader();
+            fileReader.readAsText(e.target.files[0], "UTF-8");
+            fileReader.onload = e => {
+                this.setState({ json: JSON.parse(e.target.result) });
+            };
+        }
     };
 
-    handleClick = () =>{
-        this.setState({res: this.convert()})
+    handleClick = () => {
+        if(this.state.json.Brands === undefined){
+            this.setState({error:true});
+        }
+        else{
+            this.setState({ error: false, res: this.convert(), resCollapse: false })
+        }
     }
+
     convert = () => {
-        let {json, res} = this.state;
+        let { json, res } = this.state;
         let brands = json.Brands[0];
         let out = res.Year[0];
         for (const [key, value] of Object.entries(brands)) {
-          let years = value[0].Year[0];
-          for (const [year, data] of Object.entries(years)) {
-            if(out.hasOwnProperty(year)){
-            //   console.log("if: ", key);
-              out[year].push({[key]:data});
+            let years = value[0].Year[0];
+            for (const [year, data] of Object.entries(years)) {
+                if (out.hasOwnProperty(year)) {
+                    out[year].push({ [key]: data });
+                }
+                else {
+                    out[year] = [];
+                    out[year].push({ [key]: data });
+                }
             }
-            else{
-              out[year] = [];
-              out[year].push({[key]:data});
-            }
-          }
         }
         return res;
-      }
-
+    }
     
+    downloadClick = async () => {
+        const { res } = this.state;
+        await writeJsonFile('convertedFile.json', res);
+    }
+
     render() {
-        console.log("this.state: ", this.state);
-        const {json, res} = this.state;
+        const { json, res, resCollapse, error } = this.state;
         return (
             <div className="App">
-                <header className="App-header">
-                    <label for="myfile">Select a file:</label>
-                    <input type="file" id="myfile" name="myfile" onChange={this.handleChange}/>
-                    <button type = "button" onClick={this.handleClick}>Convert</button>
-                </header>
-                <div className="container">
-                    <div className="item">
-                        <ReactJson src={json} theme="monokai" />
-                    </div>
-                    <div className="item">
-                        <ReactJson src={res} theme="monokai" collapsed={true} />
-                    </div>
+                <Header size='huge' className="title-header">
+                    Hack-Fest Application
+                </Header>
+                <div>
+                    <label for="myfile" className="label">Choose file to upload</label>
+                    <Input type="file" id="myfile" name="myfile" accept="application/JSON" onChange={this.handleChange} />
+                    <Button className="convertButton" primary disabled={json == null} onClick={this.handleClick}>Convert</Button>
                 </div>
-                {/* <JSONTree data={res} /> */}
+                {
+                    error ?
+                    <Message visible warning>Please select file of proper format</Message>
+                    :
+                    null
+                }
+                <div className="container">
+                    {json == null ? null :
+                        <div className="item">
+                            <Header size='medium' className="jsonHeading">Original JSON</Header>
+                            <ReactJson src={json} theme="monokai" collapsed={false} />
+                        </div>
+                    }
+                    {
+                        resCollapse || error ? null :
+                            <div className="item">
+
+                                <Header size='medium' className="jsonHeading">Converted JSON
+                                    <span className="downloadJson">
+                                        <a
+                                            href={`data:text/json;charset=utf-8,${encodeURIComponent(
+                                                JSON.stringify(res)
+                                            )}`}
+                                            download="convertedFile.json"
+                                        >
+                                            {`Download File`}
+                                        </a>
+                                    </span>
+                                </Header>
+                                <ReactJson src={res} theme="monokai" collapsed={resCollapse} />
+                            </div>
+                    }
+                </div>
             </div>
         );
     }

@@ -1,8 +1,27 @@
 .container {
-    display: flex; /* or inline-flex */
-    justify-content: space-around;
-    flex-flow: row wrap;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
   .item {
-    flex-grow: 1; /* default 0 */
+    flex-grow: 1;
+    margin: 10px 10px 0 10px;
+  }
+  .title-header{
+      text-align: center;
+      margin-top: 1% !important;
+  }
+  .label{
+    margin: 10px 10px;
+    font-size: 20px;
+  }
+  .convertButton{
+      margin-left: 2% !important;
+  }
+  .jsonHeading{
+      text-align: center !important;
+  }
+  .downloadJson{
+      float: right;
   }

@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Pre-requisites
+
+Please run the following commands to run the application as electron app
+### `npm install -g wait-on`
+### `npm install -g electron`
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -14,10 +20,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
+### `npm run electrona-app`
+Runs the app in development mode and then runs the electron app.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Upon running this command, a desktop app will be launched which serves the application.
+
 
 ### `npm run build`
 

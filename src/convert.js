@@ -82,7 +82,7 @@ class convert extends Component {
                 </Header>
                 {/* an elemtnt to upload the json file and a button to convert it */}
                 <div>
-                    <label for="myfile" className="label">Choose file to upload</label>
+                    <label htmlFor="myfile" className="label">Choose file to upload</label>
                     <Input type="file" id="myfile" name="myfile" accept="application/JSON" onChange={this.handleChange} />
                     <Button className="convertButton" primary disabled={json == null} onClick={this.handleClick}>Convert</Button>
                 </div>

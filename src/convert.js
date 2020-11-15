@@ -26,6 +26,7 @@ class convert extends Component {
 
     handleChange = e => {
         if ((e.target.files.length) !== 0) {
+            // code to read the json file
             const fileReader = new FileReader();
             fileReader.readAsText(e.target.files[0], "UTF-8");
             fileReader.onload = e => {
@@ -35,14 +36,18 @@ class convert extends Component {
     };
 
     handleClick = () => {
+
+        // validating the json file
         if(this.state.json.Brands === undefined){
             this.setState({error:true});
         }
         else{
+            // fetching the json from the convert() function and storing it as state
             this.setState({ error: false, res: this.convert(), resCollapse: false })
         }
     }
 
+    // function to convert the json structure to another structure
     convert = () => {
         let { json, res } = this.state;
         let brands = json.Brands[0];
@@ -62,6 +67,7 @@ class convert extends Component {
         return res;
     }
     
+    // function to download the json file
     downloadClick = async () => {
         const { res } = this.state;
         await writeJsonFile('convertedFile.json', res);
@@ -74,6 +80,7 @@ class convert extends Component {
                 <Header size='huge' className="title-header">
                     Hack-Fest Application
                 </Header>
+                {/* an elemtnt to upload the json file and a button to convert it */}
                 <div>
                     <label for="myfile" className="label">Choose file to upload</label>
                     <Input type="file" id="myfile" name="myfile" accept="application/JSON" onChange={this.handleChange} />
@@ -86,12 +93,14 @@ class convert extends Component {
                     null
                 }
                 <div className="container">
+                    {/* validation of the json file imported from the system */}
                     {json == null ? null :
                         <div className="item">
                             <Header size='medium' className="jsonHeading">Original JSON</Header>
                             <ReactJson src={json} theme="monokai" collapsed={false} />
                         </div>
                     }
+                    {/* validation of the output file to display only when the conversion is done */}
                     {
                         resCollapse || error ? null :
                             <div className="item">

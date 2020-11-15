@@ -5,8 +5,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Pre-requisites
 
 Please run the following commands to run the application as electron app
-### `npm install -g wait-on`
-### `npm install -g electron`
+
+	$ npm install -g wait-on
+	$ npm install -g electron
 
 ## How to start running
 
